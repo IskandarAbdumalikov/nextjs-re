@@ -8,10 +8,10 @@ export default function Home() {
   return (
     <div>
       <Hero />
-      <Products title="Products" slice={8} />
+      <Products title="Products" limit={8} />
       <Clean />
       <Users />
-      <Products title="Popular" slice={4} />
+      <Products title="Popular" limit={4} />
       <Footer />
     </div>
   );

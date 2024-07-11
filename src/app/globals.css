@@ -24,3 +24,16 @@ a {
 button {
   cursor: pointer;
 }
+
+.overlay {
+  position: fixed;
+  top: 75px;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: #0002;
+  z-index: 99999;
+  cursor: pointer;
+  -webkit-filter: blur(8px);
+  filter: blur(8px);
+}

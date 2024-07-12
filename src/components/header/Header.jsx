@@ -39,6 +39,7 @@ function Header() {
           <Link href="/contact" className="text-gray-700 hover:text-gray-900">
             Contact Us
           </Link>
+          <Link href={"/admin/productManage"}>Admin</Link>
         </ul>
         <ul className="flex gap-8 items-center">
           <Link href={"/admin"}>

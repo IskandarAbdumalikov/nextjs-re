@@ -16,10 +16,8 @@ const cartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(state.value));
     },
     remove: (state, { payload }) => {
-      if (confirm("Are you sure")) {
-        state.value = state.value.filter((el) => el.id !== payload.id);
-        localStorage.setItem("cart", JSON.stringify(state.value));
-      }
+      state.value = state.value.filter((el) => el.id !== payload.id);
+      localStorage.setItem("cart", JSON.stringify(state.value));
     },
     increaseAmount: (state, { payload }) => {
       let index = state.value.findIndex((el) => el.id === payload.id);

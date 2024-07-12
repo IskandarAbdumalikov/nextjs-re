@@ -3,10 +3,18 @@ import React from "react";
 import star from "../../assets/star.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { add } from "@/lib/features/cart/cartSlice";
+import {
+  add,
+  decreaseAmount,
+  increaseAmount,
+  remove,
+} from "@/lib/features/cart/cartSlice";
 
 const Single = ({ singleData }) => {
   let cartData = useSelector((state) => state.cart.value);
+  let selectedData = cartData.filter(
+    (product) => product.id === singleData.id
+  )[0];
   let dispatch = useDispatch();
   return (
     <div
@@ -40,21 +48,48 @@ const Single = ({ singleData }) => {
 
         <div className="flex flex-col gap-4">
           <h2 className="text-xl font-medium">Quantity</h2>
-          <div className="counter flex items-center gap-4">
-            <button className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50">
-              -
+          {cartData.some((product) => product.id === singleData.id) ? (
+            <div className="counter flex items-center gap-4">
+              {selectedData.amount === 1 ? (
+                <button
+                  onClick={() => dispatch(remove(selectedData))}
+                  className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                >
+                  -
+                </button>
+              ) : (
+                <button
+                  onClick={() => dispatch(decreaseAmount(selectedData))}
+                  className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                >
+                  -
+                </button>
+              )}
+
+              <span className="text-2xl">{selectedData.amount}</span>
+              <button
+                onClick={() =>
+                  dispatch(
+                    increaseAmount(
+                      cartData.filter(
+                        (product) => product.id === singleData.id
+                      )[0]
+                    )
+                  )
+                }
+                className="px-4 py-2 bg-gray-200 rounded"
+              >
+                +
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => dispatch(add(singleData))}
+              className="mt-4  px-4 py-2 bg-[#56B280] text-white rounded "
+            >
+              Add to cart
             </button>
-            <span className="text-2xl">0</span>
-            <button className="px-4 py-2 bg-gray-200 rounded">+</button>
-          </div>
-          <button
-            onClick={() => dispatch(add(singleData))}
-            className="mt-4  px-4 py-2 bg-[#56B280] text-white rounded "
-          >
-            {cartData.some((product) => product.id === singleData.id)
-              ? "Already added cart"
-              : "+ Add to cart"}
-          </button>
+          )}
         </div>
       </div>
     </div>

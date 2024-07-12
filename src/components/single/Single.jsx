@@ -12,9 +12,7 @@ import {
 
 const Single = ({ singleData }) => {
   let cartData = useSelector((state) => state.cart.value);
-  let selectedData = cartData.filter(
-    (product) => product.id === singleData.id
-  )[0];
+  let selectedData = cartData.find((product) => product.id === singleData.id);
   let dispatch = useDispatch();
   return (
     <div
@@ -87,7 +85,7 @@ const Single = ({ singleData }) => {
               onClick={() => dispatch(add(singleData))}
               className="mt-4  px-4 py-2 bg-[#56B280] text-white rounded "
             >
-              Add to cart
+              + Add to cart
             </button>
           )}
         </div>

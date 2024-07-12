@@ -7,6 +7,7 @@ const nextConfig = {
       "s3-alpha-sig.figma.com",
       "i.pinimg.com",
       "cdn-icons-png.flaticon.com",
+      "www.thespruceeats.com",
     ],
   },
 };

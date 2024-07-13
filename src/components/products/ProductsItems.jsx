@@ -51,36 +51,38 @@ const ProductsItems = ({ limit, isAdmin, category }) => {
       setShowEditModule(false);
     });
   };
+
   return (
-    <div className="products__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="products__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 p-4">
       {data?.map((el) => (
         <div
-          className="products__cards__card rounded-[10px] relative shadow-md flex flex-col max-h-[400px] min-h-[250px] gap-4"
+          className="products__cards__card rounded-lg relative shadow-md flex flex-col max-h-[400px] min-h-[250px] gap-4 bg-white"
           key={el.id}
         >
           <div
             onClick={() => handleViewMore(el)}
-            className="products__cards__card__image flex-1 h-1/2 w-full bg-[#f8f7fe]"
+            className="products__cards__card__image flex-1 h-1/2 w-full bg-gray-100 cursor-pointer"
           >
             <Image
               src={el.images[0]}
               width={500}
               height={500}
-              className="w-full h-full object-contain"
+              className="w-full h-full object-contain rounded-t-lg"
               alt={el.name}
             />
           </div>
-          <div className="products__cards__card__info flex-1 flex flex-col items-center justify-center gap-[30px]">
+
+          <div className="products__cards__card__info flex-1 flex flex-col items-center justify-center gap-4 p-4">
             <Link
-              className="cursor-pointer text-blue-500"
+              className="cursor-pointer text-blue-500 hover:underline"
               href={`/product/${el.id}`}
             >
               {el.title}
             </Link>
-            <h2 className="text-green-500">${el.price}</h2>
+            <h2 className="text-green-500 text-xl">${el.price}</h2>
             <button
               onClick={() => dispatch(toggleHeart(el))}
-              className="absolute top-[10px] left-[10px]"
+              className="absolute top-4 left-4"
             >
               {wishlistData.some((product) => product.id === el.id) ? (
                 <FaHeart className="text-green-500 w-5 h-5" />
@@ -90,18 +92,16 @@ const ProductsItems = ({ limit, isAdmin, category }) => {
             </button>
             <button
               onClick={() => dispatch(add(el))}
-              className="absolute top-[10px] right-[10px]"
+              className="absolute top-4 right-4"
             ></button>
-            <div className="flex items-center justify-between gap-[40px]">
-              {isAdmin ? (
+            <div className="flex items-center justify-between gap-4 w-full">
+              {isAdmin && (
                 <button
-                  className="bg-red-600 py-[10px] px-[15px] rounded-[5px] text-white"
+                  className="bg-red-600 py-2 px-4 rounded text-white"
                   onClick={() => handleDelete(el.id)}
                 >
-                  delete
+                  Delete
                 </button>
-              ) : (
-                <></>
               )}
               {cartData.some((product) => product.id === el.id) ? (
                 <div className="counter flex items-center gap-4">
@@ -115,7 +115,7 @@ const ProductsItems = ({ limit, isAdmin, category }) => {
                           )
                         )
                       }
-                      className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                      className="px-4 py-2 bg-gray-200 rounded"
                     >
                       -
                     </button>
@@ -128,7 +128,7 @@ const ProductsItems = ({ limit, isAdmin, category }) => {
                           )
                         )
                       }
-                      className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                      className="px-4 py-2 bg-gray-200 rounded"
                     >
                       -
                     </button>
@@ -152,48 +152,40 @@ const ProductsItems = ({ limit, isAdmin, category }) => {
                 </div>
               ) : (
                 <button
-                  className="bg-green-600 py-[10px] px-[15px] rounded-[5px] text-white"
+                  className="bg-green-600 py-2 px-4 rounded text-white"
                   onClick={() => dispatch(add(el))}
                 >
-                  + ADD
+                  + ADD to cart
                 </button>
               )}
-              {isAdmin ? (
+              {isAdmin && (
                 <button
-                  className="bg-blue-600 py-[10px] px-[15px] rounded-[5px] text-white"
+                  className="bg-blue-600 py-2 px-4 rounded text-white"
                   onClick={() => handleUpdateProduct(el)}
                 >
-                  edit
+                  Edit
                 </button>
-              ) : (
-                <></>
               )}
             </div>
           </div>
-          {showModule ? (
+          {showModule && (
             <SingleModule
               product={selectedProduct}
               setShowModule={setShowModule}
             />
-          ) : (
-            <></>
           )}
-          {showModule && showEditModule ? (
+          {showModule && showEditModule && (
             <div onClick={() => setShowModule(false)} className="overlay"></div>
-          ) : (
-            <></>
           )}
         </div>
       ))}
-      {showEditModule ? (
+      {showEditModule && (
         <EditModule
           isProducts={true}
           data={selectedProduct}
           setShowEditModule={setShowEditModule}
           onUpdate={handleUpdateSubmit}
         />
-      ) : (
-        <></>
       )}
     </div>
   );

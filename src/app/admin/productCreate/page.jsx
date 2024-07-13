@@ -131,7 +131,7 @@ const ProductCreate = () => {
               value={productData.category}
             >
               {categoryData?.map((el) => (
-                <option key={el.slug} value={el.slug}>
+                <option key={el.id} value={el.name}>
                   {el.name}
                 </option>
               ))}

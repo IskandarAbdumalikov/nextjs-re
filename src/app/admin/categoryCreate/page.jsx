@@ -1,14 +1,14 @@
 'use client'
 import React, { useState } from "react";
 import Sidebar from "@/components/sidebar/Sidebar";
-import { useCreateCategoriesMutation } from "@/lib/api/categoriesApi";
+import { useCreateCategoryMutation } from "@/lib/api/categoriesApi";
 
 const initialState = {
   name: "",
 };
 
 const CategoryCreate = () => {
-  const [handleCreate, { data }] = useCreateCategoriesMutation();
+  const [handleCreate, { data }] = useCreateCategoryMutation();
   const [categoryData, setCategoryData] = useState(initialState);
 
   const handleChange = (e) => {

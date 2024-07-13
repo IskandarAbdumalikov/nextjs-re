@@ -1,9 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import "./editModule.scss";
+import { useGetCategoriesQuery } from "@/lib/api/categoriesApi";
 
 const EditModule = ({ isProducts, data, onUpdate, setShowEditModule }) => {
   const [formData, setFormData] = useState(data);
+  let { data: categoryData } = useGetCategoriesQuery();
+
 
   useEffect(() => {
     setFormData(data);
@@ -67,14 +70,20 @@ const EditModule = ({ isProducts, data, onUpdate, setShowEditModule }) => {
               />
             </div>
             <div>
-              <input
-                type="text"
-                name="category"
-                value={formData.category}
+              <select
                 onChange={handleChange}
-                placeholder="Category"
-                className="w-full p-2 border border-gray-300 rounded-md"
-              />
+                className="mt-1 p-2 border w-full border-gray-300 rounded-md"
+                required
+                name="category"
+                id="category"
+                value={formData.category}
+              >
+                {categoryData?.map((el) => (
+                  <option key={el.id} value={el.name}>
+                    {el.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <input

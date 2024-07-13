@@ -9,13 +9,13 @@ export const categoriesApi = api.injectEndpoints({
       }),
       providesTags: ["categories"],
     }),
-    getCategoriesById: build.query({
+    getCategoryById: build.query({
       query: (id) => ({
         url: `/categories/${id}`,
       }),
       providesTags: ["categories"],
     }),
-    createCategories: build.mutation({
+    createCategory: build.mutation({
       query: (body) => ({
         url: "/categories",
         method: "POST",
@@ -23,17 +23,17 @@ export const categoriesApi = api.injectEndpoints({
       }),
       invalidatesTags: ["categories"],
     }),
-    deleteCategories: build.mutation({
-      query: (id) => ({
+    deleteCategory: build.mutation({
+      query: ({ id }) => ({
         url: `/categories/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["categories"],
     }),
-    updateCategories: build.mutation({
+    updateCategory: build.mutation({
       query: ({ id, body }) => ({
         url: `/categories/${id}`,
-        method: "PUT", // or "PATCH"
+        method: "PUT",
         body,
       }),
       invalidatesTags: ["categories"],
@@ -43,7 +43,7 @@ export const categoriesApi = api.injectEndpoints({
 
 export const {
   useGetCategoriesQuery,
-  useCreateCategoriesMutation,
-  useDeleteCategoriesMutation,
-  useUpdateCategoriesMutation,
+  useCreateCategoryMutation,
+  useDeleteCategoryMutation,
+  useUpdateCategoryMutation,
 } = categoriesApi;

@@ -5,10 +5,12 @@ import React, { useState } from "react";
 import "../admin.scss";
 import ProductsItems from "@/components/products/ProductsItems";
 import { useGetCategoriesQuery } from "@/lib/api/categoriesApi";
+import EditModule from "@/components/editModule/EditModule";
 
 const productManage = () => {
   let { data } = useGetCategoriesQuery();
   let [category, setCategory] = useState("");
+  
 
   return (
     <div className="admin">
@@ -29,6 +31,7 @@ const productManage = () => {
         </div>
         <ProductsItems category={category} isAdmin={true} />
       </div>
+      
     </div>
   );
 };

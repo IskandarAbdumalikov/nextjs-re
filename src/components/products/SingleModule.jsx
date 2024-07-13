@@ -40,13 +40,13 @@ const SingleModule = ({ product, setShowModule }) => {
           }}
           className="product-swiper"
         >
-          {product?.images?.map((url, index) => (
+          {product?.map((url, index) => (
             <SwiperSlide key={index}>
               <Image
                 width={200}
                 height={200}
                 src={url}
-                alt={`Product image ${index + 1}`}
+                alt={`Product image ${url.thumbnail}`}
                 className="product-image"
               />
             </SwiperSlide>
@@ -64,7 +64,9 @@ const SingleModule = ({ product, setShowModule }) => {
             : "No description available"}
         </p>
         <p>Price: ${product.price}</p>
-        <Link className="text-blue-400" href={`/product/${product.id}` }>Show more details</Link>
+        <Link className="text-blue-400" href={`/product/${product.id}`}>
+          Show more details
+        </Link>
       </div>
     </div>
   );

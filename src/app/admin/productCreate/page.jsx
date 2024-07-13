@@ -25,12 +25,11 @@ const ProductCreate = () => {
     setProductData({ ...productData, [e.target.name]: e.target.value });
   };
 
-  const handleCreateProduct = async (e) => {
+  const handleCreateProduct = (e) => {
     e.preventDefault();
-    const { title, thumbnail, description, price, category, brand, images } =
+    const { title, _, description, price, category, brand, images } =
       productData;
-    const imagesArray = images.split(",").map((img) => img.trim());
-    await handleCreate({
+    handleCreate({
       title,
       thumbnail: "",
       description,
@@ -129,9 +128,12 @@ const ProductCreate = () => {
               required
               name="category"
               id="category"
+              value={productData.category}
             >
               {categoryData?.map((el) => (
-                <option value={el.slug}>{el.name}</option>
+                <option key={el.slug} value={el.slug}>
+                  {el.name}
+                </option>
               ))}
             </select>
           </div>

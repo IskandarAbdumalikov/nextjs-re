@@ -18,22 +18,39 @@ import {
   useGetProductsQuery,
   useUpdateProductMutation,
 } from "@/lib/api/productApi";
+import EditModule from "../editModule/EditModule";
 
 const ProductsItems = ({ limit, isAdmin, category }) => {
-  let { data } = useGetProductsQuery({ limit, category });
-  let wishlistData = useSelector((state) => state.wishlist.value);
-  let cartData = useSelector((state) => state.cart.value);
+  const { data } = useGetProductsQuery({ limit, category });
+  const wishlistData = useSelector((state) => state.wishlist.value);
+  const cartData = useSelector((state) => state.cart.value);
 
-  let dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [showModule, setShowModule] = useState(false);
+  const [showEditModule, setShowEditModule] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  console.log(data);
+
   const handleViewMore = (product) => {
     setSelectedProduct(product);
     setShowModule(true);
   };
+
   const [handleDelete] = useDeleteProductMutation();
-  const [handleUpdate, { data: updatedData }] = useUpdateProductMutation();
+  const [handleUpdate, { data: update }] = useUpdateProductMutation();
+
+  console.log("update", update);
+
+  const handleUpdateProduct = (product) => {
+    setSelectedProduct(product);
+    setShowEditModule(true);
+  };
+
+  const handleUpdateSubmit = (updatedProduct) => {
+    const { id, ...body } = updatedProduct;
+    handleUpdate({ id, ...body }).then(() => {
+      setShowEditModule(false);
+    });
+  };
   return (
     <div className="products__cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       {data?.map((el) => (
@@ -144,7 +161,7 @@ const ProductsItems = ({ limit, isAdmin, category }) => {
               {isAdmin ? (
                 <button
                   className="bg-blue-600 py-[10px] px-[15px] rounded-[5px] text-white"
-                  onClick={() => handleUpdate(el.id, el)}
+                  onClick={() => handleUpdateProduct(el)}
                 >
                   edit
                 </button>
@@ -161,13 +178,23 @@ const ProductsItems = ({ limit, isAdmin, category }) => {
           ) : (
             <></>
           )}
-          {showModule ? (
+          {showModule && showEditModule ? (
             <div onClick={() => setShowModule(false)} className="overlay"></div>
           ) : (
             <></>
           )}
         </div>
       ))}
+      {showEditModule ? (
+        <EditModule
+          isProducts={true}
+          data={selectedProduct}
+          setShowEditModule={setShowEditModule}
+          onUpdate={handleUpdateSubmit}
+        />
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

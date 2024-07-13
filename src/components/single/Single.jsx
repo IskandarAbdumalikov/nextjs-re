@@ -9,10 +9,15 @@ import {
   increaseAmount,
   remove,
 } from "@/lib/features/cart/cartSlice";
+import { useGetProductByIdQuery } from "@/lib/api/productApi";
 
-const Single = ({ singleData }) => {
+const Single = ({ id }) => {
+  let data = useGetProductByIdQuery(id);
+  let singleData = data?.data;
+  console.log(singleData);
   let cartData = useSelector((state) => state.cart.value);
   let selectedData = cartData.find((product) => product.id === singleData.id);
+
   let dispatch = useDispatch();
   return (
     <div
@@ -24,7 +29,7 @@ const Single = ({ singleData }) => {
           className="w-full object-contain max-h-[600px]"
           width={500}
           height={500}
-          src={singleData?.images[0]}
+          src={singleData?.thumbnail}
           alt={singleData?.title}
         />
         <h3 className="text-lg">

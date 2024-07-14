@@ -4,6 +4,7 @@ import Single from "@/components/single/Single";
 
 const SinglePage = ({ params }) => {
   let { id } = params;
+  console.log(id);
 
   return (
     <>

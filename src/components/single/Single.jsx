@@ -12,9 +12,9 @@ import {
 import { useGetProductByIdQuery } from "@/lib/api/productApi";
 
 const Single = ({ id }) => {
+  console.log(id);
   let data = useGetProductByIdQuery(id);
   let singleData = data?.data;
-  console.log(singleData);
   let cartData = useSelector((state) => state.cart.value);
   let selectedData = cartData.find((product) => product.id === singleData.id);
 
